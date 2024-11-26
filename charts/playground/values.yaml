@@ -1,0 +1,17 @@
+codeServer:
+  password: ""
+  storage: 
+    size: "5Gi"
+    className: ""
+
+  extensions:
+    - ms-python.python
+    - golang.Go
+
+  ingress:
+    enabled: false
+    className: ""
+    host: ""
+    tls:
+      enabled: true
+      clusterIssuer: "kloudlite-cert-issuer"
