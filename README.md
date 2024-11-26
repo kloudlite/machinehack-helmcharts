@@ -1,4 +1,4 @@
 ## MachineHack helm charts
-collection of helm charts
+A collection of MachineHack pre-configured environment templates
 
 - [**playground**](./charts/playground)
