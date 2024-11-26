@@ -6,8 +6,11 @@ metadata:
   namespace: {{.Release.Namespace}}
 type: Opaque
 data:
-  PASSWORD: {{ .Values.codeServer.password | b64enc }}
-
+  {{- if not .Release.IsUpgrade }}
+  PASSWORD: {{ randAlphaNum 29 | b64enc }}
+  {{- else }}
+  PASSWORD:  {{ index (lookup "v1" "Secret" .Release.Namespace (include "code-server.secret.name" .)).data "PASSWORD" }}
+  {{- end }}
 ---
 
 apiVersion: apps/v1
@@ -110,8 +113,8 @@ spec:
   storageClassName: {{.Values.codeServer.storage.className}}
   {{- end }}
   
-
 ---
+
 {{- if .Values.codeServer.ingress.enabled }}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -130,7 +133,7 @@ spec:
   ingressClassName: {{.Values.codeServer.ingress.className}}
   {{- end }}
   rules:
-  - host: {{required "A valid DNS Hostname must be provided, when ingress is enabled" .Values.codeServer.ingress.host }}
+  - host: {{include "code-server.ingress.host" .}}
     http:
       paths:
       - path: /
@@ -142,7 +145,7 @@ spec:
               number: 80
   tls:
   - hosts:
-    - {{ .Values.codeServer.ingress.host }}
-    secretName: {{ .Values.codeServer.ingress.host }}-tls
+    - {{include "code-server.ingress.host" .}}
+    secretName: {{include "code-server.ingress.host" .}}-tls
 {{- end }}
 

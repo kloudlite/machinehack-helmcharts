@@ -1,5 +1,4 @@
 codeServer:
-  password: ""
   storage: 
     size: "5Gi"
     className: ""
@@ -11,7 +10,9 @@ codeServer:
   ingress:
     enabled: false
     className: ""
-    host: ""
+
+    # real hostname will be {{.Release.Name}}.{{hostSuffix}}
+    hostSuffix: ""
     tls:
       enabled: true
       clusterIssuer: "kloudlite-cert-issuer"
