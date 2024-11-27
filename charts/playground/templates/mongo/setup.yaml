@@ -22,6 +22,8 @@ spec:
     matchLabels:
       mongodb: mongodb
   replicas: 1
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:
@@ -47,3 +49,20 @@ spec:
         volumeMounts:
         - name: mongodb
           mountPath: /data/db
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb
+  namespace: {{.Release.Namespace}}
+spec:
+  selector:
+    mongodb: {{ include "mongodb.name" . }}
+  ports:
+    - name: mongodb
+      protocol: TCP
+      port: 27017
+      targetPort: 27017
+
+---
