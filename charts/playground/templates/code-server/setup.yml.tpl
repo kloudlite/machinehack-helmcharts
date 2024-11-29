@@ -61,7 +61,7 @@ spec:
 
       containers:
         - name: code-server
-          image: ghcr.io/kloudlite/hub/coder-with-mongo:latest
+          image: ghcr.io/kloudlite/hub/coder-with-mongosh:latest
           args:
           - --auth 
           - password
