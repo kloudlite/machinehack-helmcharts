@@ -37,7 +37,7 @@ spec:
       {{- if .Values.codeServer.extensions }}
       initContainers:
         - name: install-plugins
-          image: ghcr.io/kloudlite/hub/coder-with-mongo:latest
+          image: ghcr.io/kloudlite/hub/coder-with-mongosh:latest
           imagePullPolicy: IfNotPresent
           env:
             - name: SERVICE_URL
