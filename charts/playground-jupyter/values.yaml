@@ -1,0 +1,18 @@
+codeServer:
+  storage: 
+    size: "5Gi"
+    className: ""
+
+  extensions:
+    - ms-python.python
+    - golang.Go
+
+  ingress:
+    enabled: false
+    className: ""
+
+    # real hostname will be {{.Release.Name}}.{{hostSuffix}}
+    hostSuffix: ""
+    tls:
+      enabled: true
+      clusterIssuer: "kloudlite-cert-issuer"

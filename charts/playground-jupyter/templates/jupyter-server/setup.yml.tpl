@@ -33,47 +33,18 @@ spec:
         app: *name
     spec:
       hostname: "workspace"
-
-      {{- if .Values.codeServer.extensions }}
-      initContainers:
-        - name: install-plugins
-          image: ghcr.io/kloudlite/hub/coder-with-mongo:latest
-          imagePullPolicy: IfNotPresent
-          env:
-            - name: SERVICE_URL
-              value: https://open-vsx.org/vscode/gallery
-            - name: ITEM_URL
-              value: https://open-vsx.org/vscode/item
-          command:
-            - bash
-            - -c
-            - |
-              pids=()
-              {{- range .Values.codeServer.extensions }}
-              code-server --install-extension {{.}} &
-              pids+=($!)
-              {{- end }}
-              wait ${pids[@]}
-          volumeMounts:
-            - name: storage
-              mountPath: /home/coder
-      {{- end }}
-
       containers:
         - name: code-server
-          image: ghcr.io/kloudlite/hub/coder-with-mongo:latest
-          args:
-          - --auth 
-          - password
+          image: jupyter/base-notebook:latest
           env:
-          - name: PASSWORD
+          - name: JUPYTER_TOKEN
             valueFrom:
               secretKeyRef:
                 name: {{include "code-server.secret.name" .}}
                 key: PASSWORD
           volumeMounts:
           - name: storage
-            mountPath: /home/coder # saving home because we also need extensions and everything
+            mountPath: /home/jovyan/work
       volumes:
       - name: storage
         persistentVolumeClaim:
