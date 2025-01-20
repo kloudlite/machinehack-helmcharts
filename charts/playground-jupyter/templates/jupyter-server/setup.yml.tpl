@@ -32,6 +32,9 @@ spec:
       labels:
         app: *name
     spec:
+      securityContext:
+        fsGroup: 1000
+
       hostname: "workspace"
       containers:
         - name: code-server

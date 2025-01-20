@@ -34,6 +34,9 @@ spec:
     spec:
       hostname: "workspace"
 
+      securityContext:
+        fsGroup: 1000
+
       {{- if .Values.codeServer.extensions }}
       initContainers:
         - name: install-plugins

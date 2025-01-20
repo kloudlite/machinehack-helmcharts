@@ -29,6 +29,8 @@ spec:
       labels:
         mongodb: mongodb
     spec:
+      securityContext:
+        fsGroup: 1000
       volumes:
       - name: mongodb
         persistentVolumeClaim:
