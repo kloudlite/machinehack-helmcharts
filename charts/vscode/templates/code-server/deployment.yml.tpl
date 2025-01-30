@@ -37,7 +37,6 @@ spec:
       securityContext:
         fsGroup: 1000
 
-      {{- if .Values.codeServer.extensions }}
       initContainers:
         - name: install-plugins
           image: ghcr.io/kloudlite/hub/coder-with-mongosh:latest
@@ -64,7 +63,6 @@ spec:
           volumeMounts:
             - name: storage
               mountPath: /home/coder
-      {{- end }}
 
       containers:
         - name: code-server

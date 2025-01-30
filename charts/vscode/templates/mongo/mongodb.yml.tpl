@@ -1,3 +1,22 @@
+{{- if .Values.mongodb.enabled }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "mongodb.name" . }}
+  namespace: {{.Release.Namespace}}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.mongodb.storage.size }}
+
+  {{- if .Values.mongodb.storage.className }}
+  storageClassName: {{.Values.mongodb.storage.className}}
+  {{- end }}
+
+---
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -34,3 +53,20 @@ spec:
       - name: mongodb
         persistentVolumeClaim:
           claimName: {{ include "mongodb.pvc.name" . }}
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "mongodb.name" . }}
+  namespace: {{.Release.Namespace}}
+spec:
+  selector:
+    mongodb: {{ include "mongodb.name" . }}
+  ports:
+    - name: mongodb
+      protocol: TCP
+      port: 27017
+      targetPort: 27017
+{{- end }}

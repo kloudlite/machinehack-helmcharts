@@ -6,9 +6,7 @@ codeServer:
   nodeSelector: {}
   tolerations: []
 
-  extensions:
-    - ms-python.python
-    - golang.Go
+  extensions: []
 
   resources:
     requests:
@@ -26,6 +24,7 @@ codeServer:
     clusterIssuer: ""
 
 mongodb:
+  enabled: false
   storage:
     size: "1Gi"
     # className: ""
