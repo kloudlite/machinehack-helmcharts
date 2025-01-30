@@ -1,0 +1,39 @@
+notebook:
+  storage: 
+    size: "5Gi"
+    className: ""
+
+  nodeSelector: {}
+  tolerations: []
+
+  resources:
+    requests:
+      cpu: "500m"
+      memory: "500Mi"
+    limits:
+      cpu: "1000m"
+      memory: "1000Mi"
+
+  ingress:
+    enabled: false
+    className: ""
+
+    host: ""
+    clusterIssuer: ""
+
+mongodb:
+  enabled: false
+
+  storage:
+    size: "1Gi"
+
+  nodeSelector: {}
+  tolerations: []
+
+  resources:
+    requests:
+      memory: 256Mi
+      cpu: 250m
+    limits:
+      memory: 512Mi
+      cpu: 500m

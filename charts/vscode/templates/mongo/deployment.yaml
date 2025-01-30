@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: &name {{ include "mongodb.name" . }}
+  namespace: {{.Release.Namespace}}
+spec:
+  selector:
+    matchLabels:
+      mongodb: *name
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        mongodb: *name
+    spec:
+      nodeSelector: {{.Values.mongodb.nodeSelector | toJson }}
+      tolerations: {{.Values.mongodb.tolerations | toJson }}
+      securityContext:
+        fsGroup: 1000
+      containers:
+        - name: mongodb
+          image: mongo:4.4
+          imagePullPolicy: IfNotPresent
+          resources: {{ .Values.mongodb.resources | toJson }}
+          ports:
+          - containerPort: 27017
+          volumeMounts:
+          - name: mongodb
+            mountPath: /data/db
+
+      volumes:
+      - name: mongodb
+        persistentVolumeClaim:
+          claimName: {{ include "mongodb.pvc.name" . }}

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "mongodb.name" . }}
+  namespace: {{.Release.Namespace}}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.mongodb.storage.size }}
+
+  {{- if .Values.mongodb.storage.className }}
+  storageClassName: {{.Values.mongodb.storage.className}}
+  {{- end }}
