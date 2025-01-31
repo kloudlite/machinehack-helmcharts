@@ -1,0 +1,1 @@
+Don't use lengthly names for this release

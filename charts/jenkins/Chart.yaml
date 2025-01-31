@@ -10,12 +10,6 @@ annotations:
   licenses: Apache-2.0
 apiVersion: v2
 appVersion: 2.479.3
-dependencies:
-- name: common
-  repository: oci://registry-1.docker.io/bitnamicharts
-  tags:
-  - bitnami-common
-  version: 2.x.x
 description: Jenkins is an open source Continuous Integration and Continuous Delivery
   (CI/CD) server designed to automate the building, testing, and deploying of any
   software project.
