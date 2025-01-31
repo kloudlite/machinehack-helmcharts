@@ -6,7 +6,10 @@ description: Grafana is an open source metric analytics and visualization suite 
 
 home: https://bitnami.com
 icon: https://bitnami.com/assets/stacks/grafana/img/grafana-stack-220x234.png
-
+dependencies:
+  - name: grafana
+    version: 11.4.5
+    repository: oci://registry-1.docker.io/bitnamicharts
 keywords:
 - analytics
 - monitoring

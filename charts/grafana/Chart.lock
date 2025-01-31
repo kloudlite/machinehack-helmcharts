@@ -1,6 +1,6 @@
 dependencies:
-- name: common
+- name: grafana
   repository: oci://registry-1.docker.io/bitnamicharts
-  version: 2.29.1
-digest: sha256:0d3abbd4a9bdc95c1a5f504d253e347f723d9565222939020973dd3c4e1dd1f4
-generated: "2025-01-24T18:06:15.011902973Z"
+  version: 11.4.5
+digest: sha256:cefff8235ef1d10082fa5dc02354e47d7c7e8f9f8378104db5afd6f4fc186865
+generated: "2025-01-31T14:06:42.845137+05:30"

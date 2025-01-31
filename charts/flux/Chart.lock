@@ -1,0 +1,6 @@
+dependencies:
+- name: flux
+  repository: oci://registry-1.docker.io/bitnamicharts
+  version: 2.4.3
+digest: sha256:b2dad348913c55ce2dab78adffa544e7b4c3047181960f678abc46e3d0e160e2
+generated: "2025-01-31T14:08:55.280648+05:30"
