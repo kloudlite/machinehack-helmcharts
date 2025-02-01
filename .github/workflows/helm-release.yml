@@ -104,6 +104,13 @@ jobs:
         run: |+
           bash .github/scripts/helm-release-script.sh
 
+      - name: Creating machinehack environments template
+        shell: bash
+        env:
+          CHART_VERSION: ${{github.event.inputs.chart_version}}
+        run: |+
+          bash .github/scripts/environment-template-generator.sh
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
