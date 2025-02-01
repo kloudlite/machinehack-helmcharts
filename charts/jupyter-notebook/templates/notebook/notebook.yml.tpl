@@ -102,6 +102,13 @@ metadata:
     nginx.ingress.kubernetes.io/secure-backends: "true"
     nginx.ingress.kubernetes.io/proxy-body-size: 10m
     cert-manager.io/cluster-issuer: {{ required "a valid cluster issuer must be provided" .Values.notebook.ingress.clusterIssuer}}
+
+    {{- if .Values.notebook.ingress.cors.enabled }}
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+    nginx.ingress.kubernetes.io/cors-allow-credentials: "true"
+    nginx.ingress.kubernetes.io/cors-allow-origin: {{ .Values.notebook.ingress.cors.origins | join "," | quote }}
+    {{- end }}
+
 spec:
   ingressClassName: {{ required "a valid ingress classname must be set" .Values.notebook.ingress.className }}
   rules:

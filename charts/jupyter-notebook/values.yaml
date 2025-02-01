@@ -21,6 +21,10 @@ notebook:
     host: ""
     clusterIssuer: ""
 
+    cors:
+      enabled: false
+      origins: []
+
 mongodb:
   enabled: false
 

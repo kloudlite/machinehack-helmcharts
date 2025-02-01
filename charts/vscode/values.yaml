@@ -19,9 +19,12 @@ codeServer:
   ingress:
     enabled: false
     className: ""
+    clusterIssuer: ""
 
     host: ""
-    clusterIssuer: ""
+    cors:
+      enabled: false
+      origins: []
 
 mongodb:
   enabled: false
