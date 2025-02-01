@@ -9,7 +9,8 @@ icon: https://bitnami.com/assets/stacks/grafana/img/grafana-stack-220x234.png
 dependencies:
   - name: grafana
     version: 11.4.5
-    repository: oci://registry-1.docker.io/bitnamicharts
+    repository: https://charts.bitnami.com/bitnami
+    # repository: oci://registry-1.docker.io/bitnamicharts
 keywords:
 - analytics
 - monitoring

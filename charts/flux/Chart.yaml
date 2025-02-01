@@ -4,7 +4,8 @@ appVersion: 1.4.1
 dependencies:
 - name: flux
   version: 2.4.3
-  repository: "oci://registry-1.docker.io/bitnamicharts"
+  # repository: "oci://registry-1.docker.io/bitnamicharts"
+  repository: https://charts.bitnami.com/bitnami
 
 description: Source Controller is a component of Flux. Flux is a tool for keeping
   Kubernetes clusters in sync with sources of configuration.
