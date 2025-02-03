@@ -4,7 +4,7 @@ elasticsearch:
 
   master:
     masterOnly: false
-    replicaCount: 1
+    replicaCount: 0
   data:
     replicaCount: 0
   coordinating:
@@ -23,7 +23,7 @@ elasticsearch:
   kibana:
     elasticsearch:
       security:
-        auth:
+        auth:s
           enabled: false
 
 ingress:
