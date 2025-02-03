@@ -23,7 +23,7 @@ elasticsearch:
   kibana:
     elasticsearch:
       security:
-        auth:s
+        auth:
           enabled: false
 
 ingress:
