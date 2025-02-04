@@ -40,13 +40,13 @@ fi
 
 tar_dir=".chart-releases"
 
-pids=()
+# pids=()
 for dir in charts/*/; do
   echo cr package "$dir" --package-path $tar_dir
-  time cr package "$dir" --package-path $tar_dir &
-  pids+=($!)
+  time cr package "$dir" --package-path $tar_dir
+  # pids+=($!)
 done
-wait ${pids[@]}
+# wait ${pids[@]}
 
 uploadOpts="${opts[@]}"
 if $overwrite_release_assets; then
