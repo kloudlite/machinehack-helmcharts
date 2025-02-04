@@ -1,7 +1,4 @@
 mongodb:
-  auth:
-    rootPassword: "SAMPLE"
-
   architecture: "standalone"
 
   volumePermissions:
@@ -20,3 +17,7 @@ mongodb:
 
   nodeSelector: {}
   tolerations: []
+
+  expose:
+    enabled: true
+    host: ""
