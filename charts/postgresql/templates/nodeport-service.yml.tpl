@@ -7,11 +7,9 @@ spec:
   type: NodePort
   ports:
   - name: {{.Release.Name}}
-    port: 27017
+    port: 5432
     protocol: TCP
-    targetPort: {{.Release.Name}}
+    targetPort: tcp-{{.Release.Name}}
   selector:
-    app.kubernetes.io/component: {{.Release.Name}}
     app.kubernetes.io/instance: {{.Release.Name}}
     app.kubernetes.io/name: {{.Release.Name}}
-
