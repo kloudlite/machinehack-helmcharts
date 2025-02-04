@@ -65,12 +65,16 @@ jobs:
 
       - name: Add repositories
         run: |
+          pids=()
           for dir in $(ls -d charts/*); do
             pushd $dir
             helm dependency list 2> /dev/null | tail -n +2 | grep -v -i 'file://' | head -n -1 | awk '{ print "helm repo add " $1 " " $3 }' | while read cmd; do $cmd; done
-            helm dependency update
+            helm dependency update &
+            pids+=($!)
             popd
           done
+
+          wait ${pids[@]}
 
       - name: Setting up Chart Releaser
         run: |+

@@ -1,0 +1,10 @@
+airflow:
+  ingress:
+    enabled: false
+    className: ""
+    clusterIssuer: ""
+
+    host: ""
+    cors:
+      enabled: false
+      origins: []
