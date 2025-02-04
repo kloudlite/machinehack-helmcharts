@@ -5,16 +5,6 @@ metadata:
   name: kibana-basic-auth
   namespace: {{.Release.Namespace}}
 type: Opaque
-# data:
-#   USERNAME: {{ "kibana" | b64enc | squote }}
-#   {{- if not .Release.IsUpgrade }}
-#   {{- $password := randAlphaNum 29 }}
-#   PASSWORD: {{ $password | b64enc | squote }}
-#   auth: {{ (htpasswd "kibana" $password) | b64enc | squote }}
-#   {{- else }}
-#   PASSWORD:  {{ index (lookup "v1" "Secret" .Release.Namespace "kibana-basic-auth").data "PASSWORD" }}
-#   auth:  {{ index (lookup "v1" "Secret" .Release.Namespace "kibana-basic-auth").data "auth" }}
-#   {{- end }}
 stringData:
   USERNAME: "kibana"
   {{- if not .Release.IsUpgrade }}
@@ -45,6 +35,12 @@ metadata:
     nginx.ingress.kubernetes.io/auth-type: basic
     nginx.ingress.kubernetes.io/auth-secret: kibana-basic-auth
     nginx.ingress.kubernetes.io/auth-realm: "Authentication Required - ok"
+
+    {{- if .Values.ingress.cors.enabled }}
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+    nginx.ingress.kubernetes.io/cors-allow-credentials: "true"
+    nginx.ingress.kubernetes.io/cors-allow-origin: {{ .Values.ingress.cors.origins | join "," | quote }}
+    {{- end }}
 spec:
   {{- if .Values.ingress.className }}
   ingressClassName: {{.Values.ingress.className}}

@@ -1,8 +1,8 @@
 version: 3
 
 vars:
-  ReleaseName: "elasticsearch"
-  ReleaseNamespace: "testing-elasticsearch"
+  ReleaseName: "redis"
+  ReleaseNamespace: "testing-redis"
 
 tasks:
   install:
