@@ -40,10 +40,9 @@ fi
 
 tar_dir=".chart-releases"
 
-# for dir in $(ls -d charts/*); do
 for dir in charts/*/; do
   echo cr package "$dir" --package-path $tar_dir
-  cr package "$dir" --package-path $tar_dir
+  time cr package "$dir" --package-path $tar_dir
 done
 
 uploadOpts="${opts[@]}"
