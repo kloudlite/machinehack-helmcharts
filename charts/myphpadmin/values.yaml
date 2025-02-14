@@ -1,0 +1,23 @@
+service:
+  type: NodePort
+  
+db:
+  host: my-mysql
+  port: 3306
+  username: admin
+  password: "adminpassword"
+
+resources:
+  limits:
+    cpu: "500m"
+    memory: "512Mi"
+  requests:
+    cpu: "250m"
+    memory: "256Mi"
+
+primary:
+  persistence:
+    enabled: false
+
+ingress:
+  enabled: false
