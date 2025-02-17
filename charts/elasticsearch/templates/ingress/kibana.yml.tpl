@@ -7,14 +7,9 @@ metadata:
 type: Opaque
 stringData:
   USERNAME: "kibana"
-  {{- if not .Release.IsUpgrade }}
-  {{- $password := randAlphaNum 29 }}
-  PASSWORD: {{ $password | squote }}
+  {{- $password := include "variables.kibana-basic-auth-password" . }}
+  PASSWORD: {{ $password }}
   auth: {{ (htpasswd "kibana" $password) | squote }}
-  {{- else }}
-  PASSWORD:  {{ index (lookup "v1" "Secret" .Release.Namespace "kibana-basic-auth").data "PASSWORD" | b64dec }}
-  auth:  {{ index (lookup "v1" "Secret" .Release.Namespace "kibana-basic-auth").data "auth" | b64dec }}
-  {{- end }}
 
 ---
 
