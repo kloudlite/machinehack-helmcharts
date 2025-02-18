@@ -1,0 +1,46 @@
+codeServer:
+  repository: "https://github.com/kloudlite/website.git"
+  branch: "release-v1.0.0"
+  storage: 
+    size: "5Gi"
+    className: ""
+
+  nodeSelector: {}
+  tolerations: []
+
+  extensions: []
+
+  resources:
+    requests:
+      cpu: "500m"
+      memory: "500Mi"
+    limits:
+      cpu: "1000m"
+      memory: "1000Mi"
+
+  ingress:
+    enabled: false
+    className: ""
+    clusterIssuer: ""
+
+    host: ""
+    cors:
+      enabled: false
+      origins: []
+
+mongodb:
+  enabled: false
+  storage:
+    size: "1Gi"
+    # className: ""
+
+  nodeSelector: {}
+  tolerations: []
+
+  resources:
+    requests:
+      memory: 256Mi
+      cpu: 250m
+    limits:
+      memory: 512Mi
+      cpu: 500m
