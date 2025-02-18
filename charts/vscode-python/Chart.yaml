@@ -1,5 +1,5 @@
 apiVersion: v2
-name: vscode
+name: vscode-python
 description: A Helm chart for Kubernetes to install and manage vscode
 type: application
 version: 0.1.0
