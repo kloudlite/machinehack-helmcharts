@@ -1,0 +1,22 @@
+OPENAI_API_KEY: ""
+
+resources:
+  requests:
+    cpu: "500m"
+    memory: "512Mi"
+  limits:
+    cpu: "1000m"
+    memory: "1024Mi"
+
+storage:
+  size: "1Gi"
+
+ingress:
+  enabled: false
+  className: ""
+  clusterIssuer: ""
+
+  host: ""
+  cors:
+    enabled: false
+    origins: []
