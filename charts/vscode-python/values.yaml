@@ -19,10 +19,9 @@ codeServer:
       memory: "1000Mi"
 
   ingress:
-    enabled: false
-    className: ""
-    clusterIssuer: ""
-
+    enabled: true
+    ingressClassName: nginx
+    clusterIssuer: "kloudlite-cert-issuer"
     host: ""
     cors:
       enabled: false
