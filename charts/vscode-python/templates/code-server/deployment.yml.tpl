@@ -41,13 +41,29 @@ spec:
         - name: clone-code
           image: alpine/git:latest
           imagePullPolicy: IfNotPresent
+            command:
+            - sh
+            - -c
+            - |
+              if [ ! -d /home/coder/workspace ]; then
+                git clone --depth=1 --branch={{ .Values.codeServer.branch }} {{ .Values.codeServer.repository }} /home/coder/workspace;
+              else
+                echo "Directory /home/coder/workspace already exists, skipping clone.";
+              fi
+          volumeMounts:
+            - name: storage
+              mountPath: /home/coder
+        - name: setup-python
+          image: python:3.9
+          imagePullPolicy: IfNotPresent
           command:
-            - git
-            - clone
-            - --depth=1
-            - --branch={{ .Values.codeServer.branch }}
-            - {{ .Values.codeServer.repository }}
-            - /home/coder/workspace
+            - bash
+            - -c
+            - |
+              python3 -m venv /home/coder/workspace/.venv
+              source /home/coder/workspace/.venv/bin/activate
+              pip install -U pip
+              pip install -r /home/coder/workspace/requirements.txt
           volumeMounts:
             - name: storage
               mountPath: /home/coder
@@ -65,8 +81,6 @@ spec:
             - bash
             - -c
             - |
-              mkdir -p /home/coder/workspace
-
               pids=()
               {{- range .Values.codeServer.extensions }}
               code-server --install-extension {{.}} &
@@ -80,6 +94,15 @@ spec:
       containers:
         - name: code-server
           image: ghcr.io/kloudlite/hub/coder-with-mongosh:latest
+          command:
+            - bash
+            - -c
+            - |
+              apt install -y python3
+              source /home/coder/workspace/.venv/bin/activate
+              code-server --auth password
+          workingDir: /home/coder/workspace
+
           args:
           - --auth 
           - password

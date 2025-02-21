@@ -1,6 +1,6 @@
 codeServer:
-  repository: "https://github.com/kloudlite/website.git"
-  branch: "release-v1.0.0"
+  repository: "https://github.com/karthik1729/sample-python.git"
+  branch: "main"
   storage: 
     size: "5Gi"
     className: ""
@@ -22,7 +22,7 @@ codeServer:
     enabled: true
     className: nginx
     clusterIssuer: "kloudlite-cert-issuer"
-    host: ""
+    host: "google.com"
     cors:
       enabled: false
       origins: []
