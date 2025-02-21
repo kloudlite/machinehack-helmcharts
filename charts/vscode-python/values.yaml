@@ -20,7 +20,7 @@ codeServer:
 
   ingress:
     enabled: true
-    ingressClassName: nginx
+    className: nginx
     clusterIssuer: "kloudlite-cert-issuer"
     host: ""
     cors:
