@@ -1,0 +1,45 @@
+codeServer:
+  repository: "https://github.com/karthik1729/sample-nodejs.git"
+  branch: "main"
+  storage: 
+    size: "5Gi"
+    className: ""
+
+  nodeSelector: {}
+  tolerations: []
+
+  extensions: []
+
+  resources:
+    requests:
+      cpu: "500m"
+      memory: "500Mi"
+    limits:
+      cpu: "1000m"
+      memory: "1000Mi"
+
+  ingress:
+    enabled: true
+    className: nginx
+    clusterIssuer: "kloudlite-cert-issuer"
+    host: "google.com"
+    cors:
+      enabled: false
+      origins: []
+
+mongodb:
+  enabled: false
+  storage:
+    size: "1Gi"
+    # className: ""
+
+  nodeSelector: {}
+  tolerations: []
+
+  resources:
+    requests:
+      memory: 256Mi
+      cpu: 250m
+    limits:
+      memory: 512Mi
+      cpu: 500m
