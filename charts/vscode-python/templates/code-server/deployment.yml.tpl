@@ -48,6 +48,9 @@ spec:
             - --branch={{ .Values.codeServer.branch }}
             - {{ .Values.codeServer.repository }}
             - /home/coder/workspace
+          volumeMounts:
+            - name: storage
+              mountPath: /home/coder
         - name: install-plugins
           image: ghcr.io/kloudlite/hub/coder-with-mongosh:latest
           imagePullPolicy: IfNotPresent
