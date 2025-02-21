@@ -30,7 +30,6 @@ spec:
         app: *name
     spec:
       hostname: "workspace"
-
       nodeSelector: {{ .Values.codeServer.nodeSelector | toJson }}
       tolerations: {{ .Values.codeServer.tolerations | toJson  }}
 
@@ -41,7 +40,10 @@ spec:
         - name: clone-code
           image: alpine/git:latest
           imagePullPolicy: IfNotPresent
-            command:
+          securityContext:
+            runAsUser: 1000
+            fsGroup: 1000
+          command:
             - sh
             - -c
             - |
@@ -50,20 +52,6 @@ spec:
               else
                 echo "Directory /home/coder/workspace already exists, skipping clone.";
               fi
-          volumeMounts:
-            - name: storage
-              mountPath: /home/coder
-        - name: setup-python
-          image: python:3.9
-          imagePullPolicy: IfNotPresent
-          command:
-            - bash
-            - -c
-            - |
-              python3 -m venv /home/coder/workspace/.venv
-              source /home/coder/workspace/.venv/bin/activate
-              pip install -U pip
-              pip install -r /home/coder/workspace/requirements.txt
           volumeMounts:
             - name: storage
               mountPath: /home/coder
@@ -94,11 +82,31 @@ spec:
       containers:
         - name: code-server
           image: ghcr.io/kloudlite/hub/coder-with-mongosh:latest
+          securityContext:
+            runAsUser: 1000
+            fsGroup: 1000
           command:
             - bash
             - -c
             - |
-              apt install -y python3
+              sudo apt update
+              sudo apt install -y python3
+              if [ ! -f /home/coder/.bashrc ]; then
+                  touch /home/coder/.bashrc
+              fi
+              if [ ! -f /home/coder/.venv ]; then
+                  echo "alias python=python3" >> /home/coder/.bashrc
+              fi
+              if ! grep -q "python3 -m venv /home/coder/workspace/.venv" /home/coder/.bashrc; then
+                  python3 -m venv /home/coder/workspace/.venv
+                  source /home/coder/workspace/.venv/bin/activate
+                  pip install -U pip
+                  pip install -r /home/coder/workspace/requirements.txt
+                  echo "# Configure #" >> /home/coder/.bashrc
+                  echo "python3 -m venv /home/coder/workspace/.venv" >> /home/coder/.bashrc
+                  echo "source /home/coder/workspace/.venv/bin/activate" >> /home/coder/.bashrc
+                  echo "alias python=python3" >> /home/coder/.bashrc
+              fi
               source /home/coder/workspace/.venv/bin/activate
               code-server --auth password
           workingDir: /home/coder/workspace
