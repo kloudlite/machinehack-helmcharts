@@ -30,18 +30,18 @@ spec:
         app: *name
     spec:
       hostname: "workspace"
-
       nodeSelector: {{ .Values.codeServer.nodeSelector | toJson }}
       tolerations: {{ .Values.codeServer.tolerations | toJson  }}
-
       securityContext:
         fsGroup: 1000
-
       initContainers:
         - name: clone-code
           image: alpine/git:latest
           imagePullPolicy: IfNotPresent
-            command:
+          securityContext:
+            runAsUser: 1000
+            fsGroup: 1000
+          command:
             - sh
             - -c
             - |
@@ -53,23 +53,10 @@ spec:
           volumeMounts:
             - name: storage
               mountPath: /home/coder
-        - name: setup-nodejs
-          image: node:alpine
-          imagePullPolicy: IfNotPresent
-          command:
-            - bash
-            - -c
-            - |
-              cd /home/coder/workspace
-              npm install
-          volumeMounts:
-            - name: storage
-              mountPath: /home/coder
         - name: install-plugins
-          image: ghcr.io/kloudlite/hub/coder-with-mongosh:latest
+          image: ghcr.io/kloudlite/hub/coder-main:latest
           imagePullPolicy: IfNotPresent
           env:
-            # INFO: these 2 env vars are needed for plugins to be installed
             - name: SERVICE_URL
               value: https://open-vsx.org/vscode/gallery
 
@@ -91,18 +78,16 @@ spec:
 
       containers:
         - name: code-server
-          image: ghcr.io/kloudlite/hub/coder-with-mongosh:latest
+          image: ghcr.io/kloudlite/hub/coder-main:latest
+          securityContext:
+            runAsUser: 1000
           command:
             - bash
             - -c
             - |
-              apt install -y nodejs npm
+              cd /home/coder/workspace
+              npm install
               code-server --auth password
-          workingDir: /home/coder/workspace
-
-          args:
-          - --auth 
-          - password
           workingDir: /home/coder/workspace
           env:
             # INFO: these 2 env vars are needed for plugins to be installed

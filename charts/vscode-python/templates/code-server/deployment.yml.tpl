@@ -56,7 +56,7 @@ spec:
             - name: storage
               mountPath: /home/coder
         - name: install-plugins
-          image: ghcr.io/kloudlite/hub/coder-with-mongosh:latest
+          image: ghcr.io/kloudlite/hub/coder-main:latest
           imagePullPolicy: IfNotPresent
           env:
             # INFO: these 2 env vars are needed for plugins to be installed
