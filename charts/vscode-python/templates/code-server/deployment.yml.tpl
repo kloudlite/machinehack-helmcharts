@@ -90,7 +90,7 @@ spec:
             - -c
             - |
               sudo apt update
-              sudo apt install -y python3
+              sudo apt install -y python3 python3-pip python3.11-venv
               if [ ! -f /home/coder/.bashrc ]; then
                   touch /home/coder/.bashrc
               fi
