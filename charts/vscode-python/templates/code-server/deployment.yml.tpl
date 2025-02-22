@@ -81,7 +81,7 @@ spec:
 
       containers:
         - name: code-server
-          image: ghcr.io/kloudlite/hub/coder-with-mongosh:latest
+          image: ghcr.io/kloudlite/hub/coder-main:latest
           securityContext:
             runAsUser: 1000
             fsGroup: 1000
@@ -89,14 +89,6 @@ spec:
             - bash
             - -c
             - |
-              sudo apt update
-              sudo apt install -y python3 python3-pip python3.11-venv
-              if [ ! -f /home/coder/.bashrc ]; then
-                  touch /home/coder/.bashrc
-              fi
-              if [ ! -f /home/coder/.venv ]; then
-                  echo "alias python=python3" >> /home/coder/.bashrc
-              fi
               if ! grep -q "python3 -m venv /home/coder/workspace/.venv" /home/coder/.bashrc; then
                   python3 -m venv /home/coder/workspace/.venv
                   source /home/coder/workspace/.venv/bin/activate
