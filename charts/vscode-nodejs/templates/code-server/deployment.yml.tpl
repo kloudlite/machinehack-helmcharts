@@ -40,7 +40,6 @@ spec:
           imagePullPolicy: IfNotPresent
           securityContext:
             runAsUser: 1000
-            fsGroup: 1000
           command:
             - sh
             - -c
