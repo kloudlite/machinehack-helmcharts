@@ -100,33 +100,32 @@ spec:
                   echo "alias python=python3" >> /home/coder/.bashrc
               fi
               source /home/coder/workspace/.venv/bin/activate
-              code-server --auth password
-          workingDir: /home/coder/workspace
-
-          args:
-          - --auth 
-          - password
+              code-server --auth password --host 0.0.0.0
           workingDir: /home/coder/workspace
           env:
-            # INFO: these 2 env vars are needed for plugins to be installed
-            - name: SERVICE_URL
-              value: https://open-vsx.org/vscode/gallery
-
-            - name: ITEM_URL
-              value: https://open-vsx.org/vscode/item
-
-            - name: PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: {{include "code-server.secret.name" .}}
-                  key: {{ include "code-server.secret.keys.password" . }}
+              # INFO: these 2 env vars are needed for plugins to be installed
+              - name: SERVICE_URL
+                value: https://open-vsx.org/vscode/gallery
+              - name: ITEM_URL
+                value: https://open-vsx.org/vscode/item
+              - name: PASSWORD
+                valueFrom:
+                  secretKeyRef:
+                    name: {{ include "code-server.secret.name" . }}
+                    key: {{ include "code-server.secret.keys.password" . }}
+              {{- if .Values.codeServer.env }}
+              {{- range .Values.codeServer.env }}
+              - name: {{ .name }}
+                value: {{ .value | quote }}
+              {{- end }}
+              {{- end }}
           resources: {{ .Values.codeServer.resources | toJson }}
           volumeMounts:
-          - name: storage
-            mountPath: /home/coder # saving home because we also need extensions and everything
+            - name: storage
+              mountPath: /home/coder # saving home because we also need extensions and everything
 
       volumes:
-      - name: storage
-        persistentVolumeClaim:
-          claimName: {{include "code-server.pvc.name" .}}
+        - name: storage
+          persistentVolumeClaim:
+            claimName: {{include "code-server.pvc.name" .}}
 

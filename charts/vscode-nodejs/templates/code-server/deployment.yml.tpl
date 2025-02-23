@@ -86,7 +86,7 @@ spec:
             - |
               cd /home/coder/workspace
               npm install
-              code-server --auth password
+              code-server --auth password --host 0.0.0.0
           workingDir: /home/coder/workspace
           env:
             # INFO: these 2 env vars are needed for plugins to be installed
@@ -101,6 +101,12 @@ spec:
                 secretKeyRef:
                   name: {{include "code-server.secret.name" .}}
                   key: {{ include "code-server.secret.keys.password" . }}
+            {{- if .Values.codeServer.env }}
+            {{- range .Values.codeServer.env }}
+            - name: {{ .name }}
+              value: {{ .value | quote }}
+            {{- end }}
+            {{- end }}
           resources: {{ .Values.codeServer.resources | toJson }}
           volumeMounts:
           - name: storage
