@@ -1,0 +1,6 @@
+dependencies:
+- name: neo4j
+  repository: https://charts.bitnami.com/bitnami
+  version: 0.2.2
+digest: sha256:6af92bc4af2428a11e90c00d0d6e39c2b89a95d2134785a29ce1df0b9d369b59
+generated: "2025-02-23T21:32:39.649847+05:30"
