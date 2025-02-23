@@ -110,9 +110,9 @@ spec:
               value: https://open-vsx.org/vscode/item
             - name: PASSWORD
               valueFrom:
-              secretKeyRef:
-                name: {{ include "code-server.secret.name" . }}
-                key: {{ include "code-server.secret.keys.password" . }}
+                secretKeyRef:
+                  name: {{ include "code-server.secret.name" . }}
+                  key: {{ include "code-server.secret.keys.password" . }}
             {{- if .Values.codeServer.env }}
             {{- range .Values.codeServer.env }}
             - name: {{ .name }}
