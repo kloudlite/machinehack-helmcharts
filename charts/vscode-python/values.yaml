@@ -1,6 +1,9 @@
 codeServer:
   repository: "https://github.com/karthik1729/sample-python.git"
   branch: "main"
+  env:
+    - name: "OPENAI_API_KEY"
+      value: "password"
   storage: 
     size: "5Gi"
     className: ""

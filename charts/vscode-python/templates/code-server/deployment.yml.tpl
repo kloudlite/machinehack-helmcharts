@@ -101,7 +101,7 @@ spec:
               fi
               source /home/coder/workspace/.venv/bin/activate
               code-server --auth password
-          workingDir: /home/coder/workspace
+            workingDir: /home/coder/workspace
             env:
             # INFO: these 2 env vars are needed for plugins to be installed
             - name: SERVICE_URL
@@ -114,7 +114,10 @@ spec:
                 name: {{ include "code-server.secret.name" . }}
                 key: {{ include "code-server.secret.keys.password" . }}
             {{- if .Values.codeServer.env }}
-            {{ toYaml .Values.codeServer.env | nindent 10 }}
+            {{- range .Values.codeServer.env }}
+            - name: {{ .name }}
+              value: {{ .value | quote }}
+            {{- end }}
             {{- end }}
           resources: {{ .Values.codeServer.resources | toJson }}
           volumeMounts:
