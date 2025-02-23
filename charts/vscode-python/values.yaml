@@ -26,20 +26,3 @@ codeServer:
     cors:
       enabled: false
       origins: []
-
-mongodb:
-  enabled: false
-  storage:
-    size: "1Gi"
-    # className: ""
-
-  nodeSelector: {}
-  tolerations: []
-
-  resources:
-    requests:
-      memory: 256Mi
-      cpu: 250m
-    limits:
-      memory: 512Mi
-      cpu: 500m

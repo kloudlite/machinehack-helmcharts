@@ -102,24 +102,20 @@ spec:
               source /home/coder/workspace/.venv/bin/activate
               code-server --auth password
           workingDir: /home/coder/workspace
-
-          args:
-          - --auth 
-          - password
-          workingDir: /home/coder/workspace
-          env:
+            env:
             # INFO: these 2 env vars are needed for plugins to be installed
             - name: SERVICE_URL
               value: https://open-vsx.org/vscode/gallery
-
             - name: ITEM_URL
               value: https://open-vsx.org/vscode/item
-
             - name: PASSWORD
               valueFrom:
-                secretKeyRef:
-                  name: {{include "code-server.secret.name" .}}
-                  key: {{ include "code-server.secret.keys.password" . }}
+              secretKeyRef:
+                name: {{ include "code-server.secret.name" . }}
+                key: {{ include "code-server.secret.keys.password" . }}
+            {{- if .Values.codeServer.env }}
+            {{ toYaml .Values.codeServer.env | nindent 10 }}
+            {{- end }}
           resources: {{ .Values.codeServer.resources | toJson }}
           volumeMounts:
           - name: storage
