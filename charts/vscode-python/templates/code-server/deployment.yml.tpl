@@ -89,6 +89,9 @@ spec:
             - bash
             - -c
             - |
+              if [ ! -f /home/coder/.bashrc ]; then
+                touch /home/coder/.bashrc
+              fi
               if ! grep -q "python3 -m venv /home/coder/workspace/.venv" /home/coder/.bashrc; then
                   python3 -m venv /home/coder/workspace/.venv
                   source /home/coder/workspace/.venv/bin/activate
