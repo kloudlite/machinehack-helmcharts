@@ -100,7 +100,7 @@ spec:
                   echo "alias python=python3" >> /home/coder/.bashrc
               fi
               source /home/coder/workspace/.venv/bin/activate
-              code-server --auth password
+              code-server --auth password --host 0.0.0.0
           workingDir: /home/coder/workspace
           env:
               # INFO: these 2 env vars are needed for plugins to be installed
