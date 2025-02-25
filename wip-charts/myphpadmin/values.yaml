@@ -1,0 +1,35 @@
+service:
+  type: NodePort
+
+database:
+  host: my-mysql
+  port: 3306
+  username: admin
+  password: "adminpassword"
+
+persistence:
+  enabled: true
+  size: 5Gi
+  storageClass: "standard"
+
+resources:
+  limits:
+    cpu: "500m"
+    memory: "512Mi"
+  requests:
+    cpu: "250m"
+    memory: "256Mi"
+
+primary:
+  persistence:
+    enabled: false
+
+ingress:
+  enabled: true
+  className: "nginx"
+  hosts:
+    - name: "phpmyadmin.machinehack-new.clients.kloudlite.io"
+
+tls:
+  enabled: true
+  clusterIssuer: "kloudlite-cert-issuer"

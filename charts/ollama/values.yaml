@@ -1,0 +1,9 @@
+ollama:
+  ollama:
+    gpu:
+      enabled: false
+      type: 'nvidia'
+      number: 1
+    models:
+      pull:
+        - llama3.2:1b

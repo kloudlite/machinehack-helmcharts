@@ -37,7 +37,8 @@ jobs:
   release:
     # depending on default permission settings for your org (contents being read-only or read-write for workloads), you will have to add permissions
     # see: https://docs.github.com/en/actions/security-guides/automatic-token-authentication#modifying-the-permissions-for-the-github_token
-    runs-on: ubuntu-latest
+    # runs-on: ubuntu-latest
+    runs-on: blacksmith-4vcpu-ubuntu-2204
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -65,12 +66,16 @@ jobs:
 
       - name: Add repositories
         run: |
+          pids=()
           for dir in $(ls -d charts/*); do
             pushd $dir
             helm dependency list 2> /dev/null | tail -n +2 | grep -v -i 'file://' | head -n -1 | awk '{ print "helm repo add " $1 " " $3 }' | while read cmd; do $cmd; done
-            helm dependency update
+            helm dependency update &
+            pids+=($!)
             popd
           done
+
+          wait ${pids[@]}
 
       - name: Setting up Chart Releaser
         run: |+
@@ -97,8 +102,8 @@ jobs:
           HELM_MERGE_WITH_EXISTING_RELEASES: ${{ github.event.inputs.helm_merge_with_existing_indexes }}
           RELEASE_TITLE: "helm-charts"
 
-          GITHUB_REPO_OWNER: ${{github.repository_owner}}
-          GITHUB_REPO_NAME: ${{github.event.repository.name}}
+          GITHUB_REPO_OWNER: ${{ github.repository_owner }}
+          GITHUB_REPO_NAME: ${{ github.event.repository.name }}
 
         shell: bash
         run: |+

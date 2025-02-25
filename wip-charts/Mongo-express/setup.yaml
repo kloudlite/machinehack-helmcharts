@@ -1,0 +1,336 @@
+NAME: my-mongo-express
+LAST DEPLOYED: Fri Feb 14 07:11:46 2025
+NAMESPACE: mongo-express
+STATUS: deployed
+REVISION: 1
+CHART: mongo-express
+VERSION: 6.5.2
+APP_VERSION: 1.0.2
+USER-SUPPLIED VALUES:
+mongodbServer: my-mongodb
+service:
+  type: NodePort
+
+COMPUTED VALUES:
+affinity: {}
+basicAuthPassword: ""
+basicAuthUsername: ""
+common:
+  exampleValue: common-chart
+  global:
+    imagePullSecrets: []
+    imageRegistry: ""
+commonAnnotations: {}
+commonLabels: {}
+containerPorts:
+  http: 8081
+deploymentAnnotations: {}
+existingSecret: ""
+existingSecretKeyBasicAuthPassword: basic-auth-password
+existingSecretKeyMongodbAdminPassword: mongodb-admin-password
+existingSecretKeyMongodbAuthPassword: mongodb-auth-password
+existingSecretKeySiteCookieSecret: site-cookie-secret
+existingSecretKeySiteSessionSecret: site-session-secret
+extraArgs: {}
+extraDeploy: []
+extraEnvVars: []
+extraEnvVarsCM: null
+extraEnvVarsSecret: null
+fullnameOverride: ""
+global:
+  imagePullSecrets: []
+  imageRegistry: ""
+image:
+  digest: ""
+  pullPolicy: IfNotPresent
+  registry: docker.io
+  repository: mongo-express
+  tag: 1.0.2
+ingress:
+  annotations: {}
+  enabled: false
+  hosts:
+  - host: mongo-express.local
+    paths:
+    - /
+  ingressClassName: ""
+  pathType: ImplementationSpecific
+  tls: []
+kubeVersion: ""
+livenessProbe:
+  enabled: true
+  failureThreshold: 3
+  initialDelaySeconds: 0
+  periodSeconds: 10
+  successThreshold: 1
+  timeoutSeconds: 1
+mongodb:
+  enabled: false
+mongodbAdminPassword: ""
+mongodbAdminUsername: root
+mongodbAuthDatabase: ""
+mongodbAuthPassword: ""
+mongodbAuthUsername: ""
+mongodbEnableAdmin: false
+mongodbPort: 27017
+mongodbServer: my-mongodb
+nameOverride: ""
+nodeSelector: {}
+pdb:
+  create: false
+  maxUnavailable: null
+  minAvailable: 1
+podAnnotations: {}
+podLabels: {}
+podSecurityContext: {}
+priorityClassName: null
+readinessProbe:
+  enabled: true
+  failureThreshold: 3
+  initialDelaySeconds: 0
+  periodSeconds: 10
+  successThreshold: 1
+  timeoutSeconds: 1
+replicaCount: 1
+resources: {}
+runtimeClassName: ""
+securityContext: {}
+service:
+  annotations: {}
+  clusterIP: null
+  externalTrafficPolicy: Cluster
+  loadBalancerIP: null
+  loadBalancerSourceRanges: null
+  nodePorts:
+    http: null
+  ports:
+    http: 8081
+  type: NodePort
+serviceAccount:
+  annotations: {}
+  create: true
+  name: null
+siteBaseUrl: /
+siteCookieSecret: ""
+siteSessionSecret: ""
+startupProbe:
+  enabled: false
+  failureThreshold: 3
+  initialDelaySeconds: 0
+  periodSeconds: 10
+  successThreshold: 1
+  timeoutSeconds: 1
+tests:
+  image:
+    digest: ""
+    pullPolicy: IfNotPresent
+    registry: ghcr.io
+    repository: cowboysysop/pytest
+    tag: 1.0.41
+tolerations: []
+topologySpreadConstraints: []
+
+HOOKS:
+---
+# Source: mongo-express/templates/tests/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: my-mongo-express-tests
+  labels:
+    helm.sh/chart: mongo-express-6.5.2
+    app.kubernetes.io/name: mongo-express
+    app.kubernetes.io/instance: my-mongo-express
+    app.kubernetes.io/version: "1.0.2"
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/component: tests
+  annotations:
+    helm.sh/hook: test
+data:
+  test_all.py: |
+    import requests
+
+    def test_service_connection():
+        url = "http://my-mongo-express:8081/"
+
+        response = requests.get(url)
+
+        assert response.status_code == 200
+---
+# Source: mongo-express/templates/tests/pod.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-mongo-express-tests
+  labels:
+    helm.sh/chart: mongo-express-6.5.2
+    app.kubernetes.io/name: mongo-express
+    app.kubernetes.io/instance: my-mongo-express
+    app.kubernetes.io/version: "1.0.2"
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/component: tests
+  annotations:
+    helm.sh/hook: test
+spec:
+  
+  containers:
+    - name: tests
+      image: ghcr.io/cowboysysop/pytest:1.0.41
+      imagePullPolicy: IfNotPresent
+      volumeMounts:
+        - name: tests
+          mountPath: /tests
+          readOnly: true
+      workingDir: /tests
+  restartPolicy: Never
+  volumes:
+    - name: tests
+      configMap:
+              name: my-mongo-express-tests
+MANIFEST:
+---
+# Source: mongo-express/templates/serviceaccount.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: my-mongo-express
+  labels:
+    helm.sh/chart: mongo-express-6.5.2
+    app.kubernetes.io/name: mongo-express
+    app.kubernetes.io/instance: my-mongo-express
+    app.kubernetes.io/version: "1.0.2"
+    app.kubernetes.io/managed-by: Helm
+---
+# Source: mongo-express/templates/secret.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: my-mongo-express
+  labels:
+    helm.sh/chart: mongo-express-6.5.2
+    app.kubernetes.io/name: mongo-express
+    app.kubernetes.io/instance: my-mongo-express
+    app.kubernetes.io/version: "1.0.2"
+    app.kubernetes.io/managed-by: Helm
+type: Opaque
+data:
+  mongodb-auth-password: ""
+  site-cookie-secret: "SVkwNnNnRVpvUzNRTTZXTU9ZSHdVUmdaYVdYMXV6V2w="
+  site-session-secret: "bnFSWUh3TW1Pb25mU1BQUEp4OUtPRzlnN1BkWDR4aWM="
+---
+# Source: mongo-express/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-mongo-express
+  labels:
+    helm.sh/chart: mongo-express-6.5.2
+    app.kubernetes.io/name: mongo-express
+    app.kubernetes.io/instance: my-mongo-express
+    app.kubernetes.io/version: "1.0.2"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  type: NodePort
+  externalTrafficPolicy: Cluster
+  ports:
+    - port: 8081
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: mongo-express
+    app.kubernetes.io/instance: my-mongo-express
+---
+# Source: mongo-express/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-mongo-express
+  labels:
+    helm.sh/chart: mongo-express-6.5.2
+    app.kubernetes.io/name: mongo-express
+    app.kubernetes.io/instance: my-mongo-express
+    app.kubernetes.io/version: "1.0.2"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  replicas: 1
+  selector:
+      matchLabels:
+      app.kubernetes.io/name: mongo-express
+      app.kubernetes.io/instance: my-mongo-express
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: mongo-express
+        app.kubernetes.io/instance: my-mongo-express
+      annotations:
+        checksum/secret: 4c65452fe027cfa7b18f8df809af95945563042e21387e64c91cbdcfed3a5f99
+    spec:
+      
+      serviceAccountName: my-mongo-express
+      securityContext:
+        {}
+      containers:
+        - name: mongo-express
+          securityContext:
+            {}
+          image: docker.io/mongo-express:1.0.2
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: PORT
+              value: "8081"
+            - name: MONGODB_SERVER
+              value: "my-mongodb"
+            - name: MONGODB_PORT
+              value: "27017"
+            - name: ME_CONFIG_MONGODB_ENABLE_ADMIN
+              value: "false"
+            - name: MONGODB_DATABASE
+              value: ""
+            - name: ME_CONFIG_MONGODB_URL
+              value: "mongodb://$(MONGODB_SERVER):$(MONGODB_PORT)/$(MONGODB_DATABASE)"
+            - name: ME_CONFIG_SITE_BASEURL
+              value: "/"
+             - name: ME_CONFIG_SITE_COOKIESECRET
+              valueFrom:
+                secretKeyRef:
+                  name: my-mongo-express
+                  key: site-cookie-secret
+            - name: ME_CONFIG_SITE_SESSIONSECRET
+              valueFrom:
+                secretKeyRef:
+                  name: my-mongo-express
+                  key: site-session-secret
+            - name: ME_CONFIG_BASICAUTH
+              value: "false"
+          ports:
+            - name: http
+              containerPort: 8081
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /status
+              port: http
+            initialDelaySeconds: 0
+            periodSeconds: 10
+            timeoutSeconds: 1
+            failureThreshold: 3
+            successThreshold: 1
+          readinessProbe:
+            httpGet:
+              path: /status
+              port: http
+            initialDelaySeconds: 0
+            periodSeconds: 10
+            timeoutSeconds: 1
+            failureThreshold: 3
+            successThreshold: 1
+          resources:
+            {}
+
+
+# NOTES:
+# 1. Get the application URL by running these commands:
+#   export NODE_PORT=$(kubectl get --namespace mongo-express -o jsonpath="{.spec.ports[0].nodePort}" services my-mongo-express)
+#   export NODE_IP=$(kubectl get nodes --namespace mongo-express -o jsonpath="{.items[0].status.addresses[0].address}")
+#   echo http://$NODE_IP:$NODE_PORT/

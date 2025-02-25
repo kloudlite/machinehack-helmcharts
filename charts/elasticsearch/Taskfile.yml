@@ -2,7 +2,7 @@ version: 3
 
 vars:
   ReleaseName: "elasticsearch"
-  ReleaseNamespace: "helm-elasticsearch"
+  ReleaseNamespace: "testing-elasticsearch"
 
 tasks:
   install:

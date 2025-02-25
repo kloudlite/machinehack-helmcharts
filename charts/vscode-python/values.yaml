@@ -1,0 +1,31 @@
+codeServer:
+  repository: "https://github.com/karthik1729/sample-python.git"
+  branch: "main"
+  env:
+    - name: "OPENAI_API_KEY"
+      value: "password"
+  storage: 
+    size: "5Gi"
+    className: ""
+
+  nodeSelector: {}
+  tolerations: []
+
+  extensions: []
+
+  resources:
+    requests:
+      cpu: "500m"
+      memory: "500Mi"
+    limits:
+      cpu: "1000m"
+      memory: "1000Mi"
+
+  ingress:
+    enabled: true
+    className: nginx
+    clusterIssuer: "kloudlite-cert-issuer"
+    host: "google.com"
+    cors:
+      enabled: false
+      origins: []

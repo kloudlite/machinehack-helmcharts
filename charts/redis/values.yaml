@@ -1,3 +1,19 @@
 redis:
+  architecture: standalone
+
+  volumePermissions:
+    enabled: true
+
+  master:
+    count: 1
+    resourcesPreset: "nano"
+    updateStrategy:
+      rollingUpdate: null
+    persistence:
+      size: 1Gi
+
   replica:
     replicaCount: 0
+
+  expose:
+    host: ""

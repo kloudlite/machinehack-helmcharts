@@ -38,6 +38,16 @@ spec:
         fsGroup: 1000
 
       initContainers:
+        - name: clone-code
+          image: alpine/git:latest
+          imagePullPolicy: IfNotPresent
+          command:
+            - git
+            - clone
+            - --depth=1
+            - --branch={{ .Values.codeServer.branch }}
+            - {{ .Values.codeServer.repository }}
+            - /home/coder/workspace
         - name: install-plugins
           image: ghcr.io/kloudlite/hub/coder-with-mongosh:latest
           imagePullPolicy: IfNotPresent

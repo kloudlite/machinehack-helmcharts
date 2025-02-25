@@ -1,0 +1,61 @@
+name: Update Template Listing
+
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_run:
+    workflows: ["Release Helm Charts"]
+    types:
+      - completed
+
+permissions:
+  contents: write
+  id-token: write
+  pages: write
+
+jobs:
+  release:
+    # depending on default permission settings for your org (contents being read-only or read-write for workloads), you will have to add permissions
+    # see: https://docs.github.com/en/actions/security-guides/automatic-token-authentication#modifying-the-permissions-for-the-github_token
+    runs-on: ubuntu-latest
+    # runs-on: blacksmith-4vcpu-ubuntu-2204
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: kubectl
+        uses: actions-hub/kubectl@master
+        env:
+          KUBE_CONFIG: ${{ secrets.HA_CLUSTER_KUBE_CONFIG }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: 3.9
+
+      - name: Installing yq (with pip)
+        run: |+
+          pip install yq
+
+      - name: Update API env templates
+        run: |
+          curl -L0 https://${{ github.repository_owner }}.github.io/${{ github.event.repository_name }}/env-template.yml | yq '.[] | select(.name | startswith( "_") | not )' -y -c > template.json 
+
+          cat > config.yml <<EOF
+          apiVersion: v1
+          kind: ConfigMap
+          metadata:
+            name: api-v2-config
+            namespace: kloudlite
+            annotations:
+              kloudlite.io/updated.by: "github-workflow"
+              kloudlite.io/updated.at: "date --rfc-2822"
+          data:
+            env-template.yml: |+
+              $(cat template.json)
+          EOF
+
+          kubectl apply -f config.yml
+
+          kubectl rollout restart deployment/api-v2 -n kloudlite

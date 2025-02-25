@@ -29,3 +29,9 @@ name: jenkins
 sources:
 - https://github.com/bitnami/charts/tree/main/bitnami/jenkins
 version: 13.5.4
+
+
+dependencies:
+  - name: jenkins
+    version: 13.5.4
+    repository: https://charts.bitnami.com/bitnami
