@@ -13,6 +13,10 @@ spec:
       http:
         paths:
           - path: /
+            pathType: Prefix
             backend:
-              serviceName: streamlit
-              servicePort: 8080
+              service:
+                name: streamlit
+                port:
+                  name: http
+  

@@ -10,4 +10,5 @@ spec:
   ports:
   - port: 80
     protocol: TCP
+    targetPort: 8080
     name: http
