@@ -6,8 +6,6 @@ metadata:
 spec:
   accessModes:
   - ReadWriteOnce
-
   resources:
     requests:
       storage: {{.Values.storage.size}}
-

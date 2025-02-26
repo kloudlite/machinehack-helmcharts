@@ -95,7 +95,6 @@ spec:
               if ! grep -q "python3 -m venv /home/coder/workspace/.venv" /home/coder/.bashrc; then
                   python3 -m venv /home/coder/workspace/.venv
                   source /home/coder/workspace/.venv/bin/activate
-                  pip install -U pip
                   pip install -r /home/coder/workspace/requirements.txt
                   echo "# Configure #" >> /home/coder/.bashrc
                   echo "python3 -m venv /home/coder/workspace/.venv" >> /home/coder/.bashrc

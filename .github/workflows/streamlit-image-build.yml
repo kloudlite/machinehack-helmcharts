@@ -1,4 +1,4 @@
-name: Coder Image build and push
+name: Streamlit Image build and push
 
 on:
   push:
@@ -33,4 +33,4 @@ jobs:
           context: charts/vscode-python
           file: images/coder/Dockerfile
           push: true
-          tags: ghcr.io/kloudlite/hub/coder-main:latest
+          tags: ghcr.io/kloudlite/hub/streamlit-main:latest
