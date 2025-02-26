@@ -1,0 +1,12 @@
+ingress:
+  enabled: true
+  host: "google.com"
+
+streamlit:
+  repository: "https://github.com/karthik1729/sample-streamlit.git"
+  branch: "master"
+  requirements: "requirements.txt"
+  script: "app.py"
+  env:
+    - name: "SAMPLE"
+      value: "test"
