@@ -4,7 +4,7 @@ on:
   push:
     branches: [ development ]
     paths:
-      - images/coder/Dockerfile
+      - images/streamlit/Dockerfile
   workflow_dispatch:
 
 jobs:
@@ -31,6 +31,6 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: charts/vscode-python
-          file: images/coder/Dockerfile
+          file: images/streamlit/Dockerfile
           push: true
           tags: ghcr.io/kloudlite/hub/streamlit-main:latest
