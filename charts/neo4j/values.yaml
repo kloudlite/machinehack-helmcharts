@@ -1,0 +1,23 @@
+mongodb:
+  architecture: "standalone"
+
+  volumePermissions:
+    enabled: true
+
+  arbiter:
+    enabled: false
+
+  resources:
+    requests:
+      cpu: "200m"
+      memory: "256Mi"
+    limits:
+      cpu: "400m"
+      memory: "512Mi"
+
+  nodeSelector: {}
+  tolerations: []
+
+  expose:
+    enabled: true
+    host: ""
