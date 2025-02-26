@@ -1,0 +1,20 @@
+version: 3
+
+vars:
+  ReleaseName: "autogen-studio"
+  ReleaseNamespace: "autogen-studio"
+
+  flags: '--set ingress.enabled=true --set ingress.host="sample" --set ingress.clusterIssuer=kloudlite-cert-issuer --set ingress.className=nginx'
+
+tasks:
+  install:
+    cmds:
+      - helm upgrade --install {{.ReleaseName}} -n {{.ReleaseNamespace}} --create-namespace . {{.flags}}
+
+  template:
+    cmds:
+      - helm template --debug --dry-run {{.ReleaseName}} -n {{.ReleaseNamespace}} --create-namespace . {{.flags}}
+
+  uninstall:
+    cmds:
+      - helm uninstall {{.ReleaseName}} -n {{.ReleaseNamespace}}

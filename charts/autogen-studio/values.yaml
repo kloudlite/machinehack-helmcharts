@@ -1,5 +1,8 @@
 OPENAI_API_KEY: ""
 
+nodeSelector: {}
+tolerations: []
+
 resources:
   requests:
     cpu: "500m"
