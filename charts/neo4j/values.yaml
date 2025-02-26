@@ -1,4 +1,4 @@
-mongodb:
+neo4j:
   architecture: "standalone"
 
   volumePermissions:
