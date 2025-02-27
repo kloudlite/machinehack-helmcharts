@@ -5,4 +5,4 @@ metadata:
   namespace: {{.Release.Namespace}}
 type: Opaque
 stringData:
-  URL: https://{{.Values.codeServer.ingress.host}}
+  URL: https://{{.Values.ingress.host}}
