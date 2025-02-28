@@ -25,6 +25,6 @@ appVersion: "1.16.0"
 
 
 dependencies:
-  - name: chroma
+  - name: chromadb
     version: 0.1.4
     repository: https://infracloudio.github.io/charts

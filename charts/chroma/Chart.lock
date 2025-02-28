@@ -1,0 +1,6 @@
+dependencies:
+- name: chromadb
+  repository: https://infracloudio.github.io/charts
+  version: 0.1.4
+digest: sha256:7179b66d323c49c27a9af3f5323176d683df65857107c5f00d820296510eefc8
+generated: "2025-02-28T16:43:57.13289+05:30"
