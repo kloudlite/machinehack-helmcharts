@@ -7,11 +7,6 @@ metadata:
     chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
-    nginx.ingress.kubernetes.io/secure-backends: "true"
-    nginx.ingress.kubernetes.io/proxy-body-size: 10m
-    cert-manager.io/cluster-issuer: {{ required "a valid cluster issuer must be provided" .Values.ingress.clusterIssuer}}
 spec:
   ingressClassName: nginx
   rules:
