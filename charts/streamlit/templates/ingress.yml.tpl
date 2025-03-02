@@ -15,6 +15,7 @@ metadata:
     {{- if .Values.ingress.cors.enabled }}
     nginx.ingress.kubernetes.io/enable-cors: "true"
     nginx.ingress.kubernetes.io/cors-allow-credentials: "true"
+    {{- end }}
 spec:
   ingressClassName: nginx
   rules:
@@ -32,4 +33,3 @@ spec:
   - hosts:
     - {{ .Values.ingress.host }}
     secretName: {{ .Values.ingress.host }}-tls
-  
