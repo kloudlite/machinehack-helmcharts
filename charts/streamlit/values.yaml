@@ -1,6 +1,11 @@
 ingress:
   enabled: true
   host: "google.com"
+  className: nginx
+  clusterIssuer: "kloudlite-cert-issuer"
+  cors:
+    enabled: false
+    origins: []
 
 streamlit:
   repository: "https://github.com/karthik1729/sample-streamlit.git"
