@@ -19,7 +19,7 @@ metadata:
 spec:
   ingressClassName: {{ required "a valid ingress class name must be provided" .Values.airflow.ingress.className}}
   rules:
-  - host: {{ .Values.airflow.ingress.host }}
+  - host: {{ .Release.Name }}-app.{{ .Values.airflow.ingress.base_host }}
     http:
       paths:
       - path: /
@@ -29,8 +29,4 @@ spec:
             name: {{ include "airflow.name" .}}
             port:
               number: 80
-  tls:
-  - hosts:
-    - {{ .Values.airflow.ingress.host }}
-    secretName: {{ .Values.airflow.ingress.host }}-tls
 {{- end }}

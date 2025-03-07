@@ -4,7 +4,7 @@ airflow:
     className: ""
     clusterIssuer: ""
 
-    host: ""
+    base_host: "kloudlab.app"
     cors:
       enabled: false
       origins: []
