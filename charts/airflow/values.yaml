@@ -1,10 +1,8 @@
+base_host: "kloudlab.app"
 airflow:
   ingress:
     enabled: false
-    className: ""
-    clusterIssuer: ""
-
-    base_host: "kloudlab.app"
+    className: "nginx"
     cors:
       enabled: false
       origins: []

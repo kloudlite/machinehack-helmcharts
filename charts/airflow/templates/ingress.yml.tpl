@@ -19,7 +19,7 @@ metadata:
 spec:
   ingressClassName: {{ required "a valid ingress class name must be provided" .Values.airflow.ingress.className}}
   rules:
-  - host: {{ .Release.Name }}-app.{{ .Values.airflow.ingress.base_host }}
+  - host: {{ .Release.Name }}-app.{{ .Values.base_host }}
     http:
       paths:
       - path: /

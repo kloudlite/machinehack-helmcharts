@@ -1,2 +1,1 @@
-ingress:
-  host: google.com
+base_host: "kloudlab.app"
