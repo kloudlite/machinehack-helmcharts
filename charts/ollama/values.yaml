@@ -7,3 +7,5 @@ ollama:
     models:
       pull:
         - llama3.2:1b
+    nodeSelector:
+      kloudlite.io/nodepool.name: ec2-nodepool-1
