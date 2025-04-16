@@ -1,9 +1,9 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: streamlit
+  name: nginx
   labels:
-    app: streamlit
+    app: nginx
     chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
@@ -17,7 +17,7 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: streamlit
+                name: nginx
                 port:
                   name: http
   tls:
