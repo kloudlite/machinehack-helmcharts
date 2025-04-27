@@ -1,0 +1,18 @@
+version: 3
+
+vars:
+  ReleaseName: "nginx"
+  ReleaseNamespace: "testing-nginx"
+
+tasks:
+  install:
+    cmds:
+      - helm upgrade --install {{.ReleaseName}} -n {{.ReleaseNamespace}} --create-namespace .
+
+  template:
+    cmds:
+      - helm template --dry-run {{.ReleaseName}} -n {{.ReleaseNamespace}} --create-namespace . --debug
+
+  uninstall:
+    cmds:
+      - helm uninstall {{.ReleaseName}} -n {{.ReleaseNamespace}}

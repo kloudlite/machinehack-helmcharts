@@ -1,25 +1,7 @@
 ingress:
-  enabled: true
-  host: "google.com"
+  enabled: enable
   className: nginx
-  clusterIssuer: "kloudlite-cert-issuer"
-  cors:
-    enabled: false
-    origins: []
-replicaCount: 1
-image:
-  repository: nginx
-  tag: "1.25.3"
-  pullPolicy: IfNotPresent
-
-service:
-  type: ClusterIP
-  port: 80
-
-resources: {}
-
-nodeSelector: {}
-
-tolerations: []
-
-affinity: {}
+  host: nginx.example.machinehack-new.clients.kloudlite.io
+  tls:
+    enabled: true
+    clusterIssuer: "kloudlite-cert-issuer"
