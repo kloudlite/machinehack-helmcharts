@@ -12,11 +12,10 @@ ingress:
   className: nginx
   annotations: 
     cert-manager.io/cluster-issuer: kloudlite-cert-issuer
-  hosts:
-    - host: n8n.machinehack-new.clients.kloudlite.io
-      paths:
-        - path: /
-          pathType: Prefix
+  host: n8n.machinehack-new.clients.kloudlite.io
+  paths:
+    - path: /
+      pathType: Prefix
   tls:
     enabled: true
     clusterIssuer: "kloudlite-cert-issuer"
