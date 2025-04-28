@@ -8,12 +8,12 @@ service:
   port: 5678
 
 ingress:
-  enabled: enable
+  enabled: true
   className: nginx
-  annotations: {}
-  host: n8n.machinehack-new.clients.kloudlite.io
+  annotations: 
+    cert-manager.io/cluster-issuer: kloudlite-cert-issuer
   hosts:
-    - host: n8n.local
+    - host: n8n.machinehack-new.clients.kloudlite.io
       paths:
         - path: /
           pathType: Prefix
