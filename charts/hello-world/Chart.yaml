@@ -1,0 +1,11 @@
+apiVersion: v2
+name: hello-world
+description: Build your own tiny container that just says "Hello World"
+type: application
+version: 0.1.0
+appVersion: "1.16.0"
+icon: https://example.com/icon.png
+#Purpose:
+#	Metadata about your Helm chart (name, version, description)
+#Relation:
+#Every Helm chart must have this. Helm reads it first.

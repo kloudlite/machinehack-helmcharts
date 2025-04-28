@@ -1,0 +1,12 @@
+#Purpose:
+#Default configuration values (like image name, tag, ports)
+#Relation:
+#Templates pull values from here using {{ .Values.<key> }}
+
+ingress:
+  enabled: enable
+  className: hello-world
+  host: hello-world.example.machinehack-new.clients.kloudlite.io
+  tls:
+    enabled: true
+    clusterIssuer: "kloudlite-cert-issuer"
