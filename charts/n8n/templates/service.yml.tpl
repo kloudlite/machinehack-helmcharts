@@ -9,5 +9,5 @@ spec:
   ports:
     - protocol: TCP
       port: {{ .Values.service.port }}
-      targetPort: 80
+      targetPort: 5678
   type: ClusterIP
