@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "hello-world.fullname" . }}
+  labels:
+    helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+
+spec:
+  selector:
+    matchLabels:
+      app: {{.Release.Name}}-hello-world
+  template:
+    metadata:
+      labels:
+        app: {{.Release.Name}}-hello-world
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:latest
+          ports:
+          - containerPort: 80
