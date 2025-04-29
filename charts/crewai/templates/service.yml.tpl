@@ -5,7 +5,7 @@ metadata:
   namespace: {{.Release.Namespace}}
 spec:
   selector:
-    app: {{.Release.Name}}-nginx
+    app: {{.Release.Name}}
   ports:
     - protocol: TCP
       port: 8000
