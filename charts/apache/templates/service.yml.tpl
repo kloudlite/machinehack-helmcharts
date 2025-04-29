@@ -5,9 +5,10 @@ metadata:
   namespace: {{.Release.Namespace}}
 spec:
   selector:
-    app: {{.Release.Name}}-apache
+    app: {{.Release.Name}}
   ports:
     - protocol: TCP
       port: 80
       targetPort: 80
-  type: NodePort
+  type: ClusterIP
+

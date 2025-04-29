@@ -1,7 +1,10 @@
 ingress:
-  enabled: enable
+  enabled: true
   className: apache
-  host: apache.example.machinehack-new.clients.kloudlite.io
+  host: apache.machinehack-new.clients.kloudlite.io
   tls:
     enabled: true
     clusterIssuer: "kloudlite-cert-issuer"
+  service:
+    type: ClusterIP
+    port: 80

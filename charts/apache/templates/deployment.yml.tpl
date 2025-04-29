@@ -7,11 +7,11 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: {{.Release.Name}}-apache
+      app: {{.Release.Name}}
   template:
     metadata:
       labels:
-        app: {{.Release.Name}}-apache
+        app: {{.Release.Name}}
     spec:
       containers:
       - name: apache
