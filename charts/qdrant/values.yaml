@@ -20,16 +20,10 @@ ingress:
   className: nginx
   annotations:
     cert-manager.io/cluster-issuer: kloudlite-cert-issuer
-    nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
-  hosts:
-    - host: qdrant.machinehack-new.clients.kloudlite.io
-      paths:
-        - path: /
-          pathType: Prefix
+  host: qdrant.machinehack-new.clients.kloudlite.io
   tls:
-    - hosts:
-        - qdrant.machinehack-new.clients.kloudlite.io
-      secretName: qdrant-tls-secret
+    enabled: true
+    clusterIssuer: "kloudlite-cert-issuer"
 
 persistence:
   enabled: true

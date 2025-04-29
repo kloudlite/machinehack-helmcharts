@@ -2,34 +2,32 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ .Release.Name }}
+  name: nginx
+  namespace: {{.Release.Namespace}}
   annotations:
-    {{- range $key, $value := .Values.ingress.annotations }}
-    {{ $key }}: {{ $value | quote }}
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/secure-backends: "true"
+    nginx.ingress.kubernetes.io/proxy-body-size: 10m
+    {{- if .Values.ingress.tls.enabled }}
+    cert-manager.io/cluster-issuer: {{ required "a valid cluster issuer must be provided" .Values.ingress.tls.clusterIssuer}}
     {{- end }}
 spec:
-  ingressClassName: {{ .Values.ingress.className }}
+  {{- if .Values.ingress.className }}
+  ingressClassName: {{.Values.ingress.className}}
+  {{- end }}
   rules:
-    {{- range .Values.ingress.hosts }}
-    - host: {{ .host }}
-      http:
-        paths:
-          {{- range .paths }}
-          - path: {{ .path }}
-            pathType: {{ .pathType }}
-            backend:
-              service:
-                name: {{ $.Release.Name }}
-                port:
-                  number: 6333
-          {{- end }}
-    {{- end }}
+  - host: {{ .Values.ingress.host }}
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: {{.Release.Name}}
+            port:
+              number: 6333
   tls:
-    {{- range .Values.ingress.tls }}
-    - hosts:
-        {{- range .hosts }}
-        - {{ . }}
-        {{- end }}
-      secretName: {{ .secretName }}
-    {{- end }}
+  - hosts:
+    - {{ .Values.ingress.host }}
+    secretName: {{ .Values.ingress.host }}-tls
 {{- end }}
