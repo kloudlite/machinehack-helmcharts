@@ -1,0 +1,43 @@
+replicaCount: 1
+
+image:
+  repository: qdrant/qdrant
+  tag: v1.9.0
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 6333
+      targetPort: 6333
+    - name: grpc
+      port: 6334
+      targetPort: 6334
+
+ingress:
+  enabled: true
+  className: nginx
+  annotations:
+    cert-manager.io/cluster-issuer: kloudlite-cert-issuer
+  host: qdrant.machinehack-new.clients.kloudlite.io
+  tls:
+    enabled: true
+    clusterIssuer: "kloudlite-cert-issuer"
+
+persistence:
+  enabled: true
+  accessMode: ReadWriteOnce
+  size: 10Gi
+
+resources:
+  requests:
+    cpu: "500m"
+    memory: "1Gi"
+  limits:
+    cpu: "1"
+    memory: "2Gi"
+
+nodeSelector: {}
+tolerations: []
+affinity: {}

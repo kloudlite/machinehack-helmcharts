@@ -1,1 +1,32 @@
-base_host: "kloudlab.app"
+ingress:
+  enabled: enable
+  className: nginx
+  host: chroma.machinehack-new.clients.kloudlite.io
+  tls:
+    enabled: true
+    clusterIssuer: "kloudlite-cert-issuer"
+replicaCount: 1
+
+image:
+  repository: chromadb/chroma
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 8000
+
+resources: {}
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+persistence:
+  enabled: false
+  accessModes:
+    - ReadWriteOnce
+  size: 1Gi
+  storageClassName: ""

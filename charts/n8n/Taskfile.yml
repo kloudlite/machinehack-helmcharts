@@ -1,0 +1,18 @@
+version: 3
+
+vars:
+  ReleaseName: "n8n"
+  ReleaseNamespace: "testing-n8n"
+
+tasks:
+  install:
+    cmds:
+      - helm upgrade --install {{.ReleaseName}} -n {{.ReleaseNamespace}} --create-namespace .
+
+  template:
+    cmds:
+      - helm template --dry-run {{.ReleaseName}} -n {{.ReleaseNamespace}} --create-namespace . --debug
+
+  uninstall:
+    cmds:
+      - helm uninstall {{.ReleaseName}} -n {{.ReleaseNamespace}}

@@ -1,0 +1,30 @@
+image:
+  repository: seemeai/crewai
+  tag: latest
+  pullPolicy: IfNotPresent
+
+ingress:
+  enabled: enable
+  className: nginx
+  host: crewai.machinehack-new.clients.kloudlite.io
+  tls:
+    enabled: true
+    clusterIssuer: "kloudlite-cert-issuer"
+
+service:
+  type: ClusterIP
+  port: 8000
+
+resources:
+  requests:
+    cpu: "500m"
+    memory: "1Gi"
+  limits:
+    cpu: "1"
+    memory: "2Gi"
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
