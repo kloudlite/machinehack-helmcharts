@@ -1,18 +1,31 @@
-controller:
-  admin:
-    username: "admin"
-    password: "admin123"
-  serviceType: NodePort
+replicaCount: 1
 
-persistence:
-  enabled: false
+image:
+  repository: jenkins/jenkins
+  tag: "lts"
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 8080
+
+resources: {}
 
 ingress:
-  enabled: false
-  className: ""
-  clusterIssuer: ""
+  enabled: true
+  host: "jenkins.example.com"
+  className: nginx
+  clusterIssuer: "kloudlite-cert-issuer"
+  cors:
+    enabled: false
+    origins: []
 
-host: ""
-cors:
- enabled: false
- origins: []
+admin:
+  user: admin
+  password: admin123
+
+persistence:
+  enabled: true
+  accessMode: ReadWriteOnce
+  size: 10Gi
+  storageClass: ""
