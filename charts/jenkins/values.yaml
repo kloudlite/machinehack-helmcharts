@@ -1,0 +1,31 @@
+replicaCount: 1
+
+image:
+  repository: jenkins/jenkins
+  tag: "lts"
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 8080
+
+resources: {}
+
+ingress:
+  enabled: true
+  host: "jenkins.example.com"
+  className: nginx
+  clusterIssuer: "kloudlite-cert-issuer"
+  cors:
+    enabled: false
+    origins: []
+
+admin:
+  user: admin
+  password: admin123
+
+persistence:
+  enabled: true
+  accessMode: ReadWriteOnce
+  size: 10Gi
+  storageClass: ""
